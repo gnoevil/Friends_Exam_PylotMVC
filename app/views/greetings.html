@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Content">
+	<title>Friends</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.css">
+    <script src="/static/js/jquery-2.1.4.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="container">
+    <nav>
+        <div class="container">
+            <div class="nav_links">
+                <a href="/logout"><button>Logout</button></a>
+            </div>
+        </div>
+    </nav>
+    <div class="main col-md-8">
+    <h1>Hello {{session['name']}}</h1>
+    <h2>Here is a list of your friends:</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Alias</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% if length == 0: %}
+                <h1>You don't have friends yet</h1>
+                {% else: %}
+                {%for friend in friends%}
+                <td>{{friend['friend_name']}}</td>
+                <td><a href="/view_profile/{{friend[
+                    'friend_id']}}">View Profile | <a href='/delete/{{friend["friend_id"]}}'>Remove as Friend</a></td>
+                </tr>
+
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+        <h1>Other users not on your friends list:</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Alias</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {{other_friends}} -->
+                <tr>
+                    {% for other_friend in other_friends %}
+                    <td><a href="/view_alias/{{other_friend['friend_id']}}">{{other_friend['friend_name']}}</a></td>
+                    <td><a href="/add_friend/{{other_friend['friend_id']}} "><button>Add as Friend</button></a>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </body>
+        </html>
